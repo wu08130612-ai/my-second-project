@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!-- 这行告诉浏览器这是一个HTML5文档 -->
+
+<html lang="zh-CN">
+<!-- <html>标签是整个网页的根元素，lang="zh-CN"告诉浏览器这是中文页面 -->
+
+<head>
+    <!-- <head>部分包含页面的元信息，用户看不到，但浏览器需要 -->
+    
+    <meta charset="UTF-8">
+    <!-- 告诉浏览器使用UTF-8编码来显示中文等字符 -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 让页面在手机上也能正常显示，不会缩放 -->
+    
+    <title>里程碑1：黑色画布</title>
+    <!-- 浏览器标签页上显示的标题 -->
+    
+    <style>
+        /* CSS样式写在<style>标签里，用来控制页面的外观 */
+        
+        * {
+            /* *号表示选择页面上的所有元素 */
+            margin: 0;          /* 去掉所有元素的外边距 */
+            padding: 0;         /* 去掉所有元素的内边距 */
+            box-sizing: border-box;  /* 让元素的宽高计算更简单 */
+        }
+        
+        html, body {
+            /* 同时设置html和body元素的样式 */
+            height: 100%;       /* 让html和body占满整个屏幕高度 */
+            width: 100%;        /* 让html和body占满整个屏幕宽度 */
+        }
+        
+        body {
+            /* 专门设置body元素的样式 */
+            background-color: black;  /* 设置背景颜色为黑色 */
+            overflow: hidden;         /* 隐藏滚动条，确保没有多余的空白 */
+            
+            /* 使用flexbox来让内容居中 - 这是现代CSS的居中方法 */
+            display: flex;            /* 启用flexbox布局 */
+            justify-content: center;  /* 水平居中 */
+            align-items: center;      /* 垂直居中 */
+        }
+        
+        .circle {
+            /* 这是我们给圆形div起的类名，用.circle来选择它 */
+            width: 100px;             /* 设置宽度为100像素 */
+            height: 100px;            /* 设置高度为100像素 - 宽高相等才能是正圆 */
+            background-color: white;  /* 设置背景颜色为白色 */
+            border-radius: 50%;       /* 关键！50%的圆角让正方形变成圆形 */
+        }
+        
+        /* 
+        border-radius解释：
+        - 0% = 完全的直角，还是方形
+        - 25% = 圆角很小的方形  
+        - 50% = 完美的圆形！
+        - 100% = 也是圆形，但计算方式不同
+        */
+    </style>
+</head>
+
+<body>
+    <!-- <body>部分是用户能看到的页面内容 -->
+    
+    <!-- 这是我们的第一个可见元素：一个div容器 -->
+    <div class="circle"></div>
+    <!-- 
+    解释这个div：
+    - <div>是一个通用的容器元素，默认是透明的方形积木块
+    - class="circle"给这个div起了个名字，让CSS能找到它并应用样式
+    - </div>是结束标签，每个开始标签都要有对应的结束标签
+    - 这个div里面是空的，没有文字内容，只是一个形状
+    -->
+
+    <!-- ========== 里程碑3：JavaScript开始！========== -->
+    <script>
+        /* 
+        <script>标签告诉浏览器："接下来的代码是JavaScript，不是HTML！"
+        JavaScript是一种编程语言，可以让网页变得"活"起来
+        */
+        
+        // 这是JavaScript的注释，用//开头，解释代码的作用
+        
+        // 第一步：创建一个函数来处理鼠标移动事件
+        function handleMouseMove(event) {
+            /*
+            这是一个函数定义：
+            - function 是关键字，告诉JavaScript"我要定义一个函数"
+            - handleMouseMove 是我们给这个函数起的名字
+            - (event) 是参数，当鼠标移动时，浏览器会把鼠标信息传给我们
+            - {} 里面是函数要执行的代码
+            */
+            
+            // 从event对象中获取鼠标的X坐标（水平位置）
+            const mouseX = event.clientX;
+            /*
+            解释这行代码：
+            - const 表示创建一个常量（不会改变的值）
+            - mouseX 是我们给这个值起的名字
+            - event.clientX 是浏览器告诉我们的鼠标水平位置
+            - clientX 的值从0开始，0表示屏幕最左边
+            */
+            
+            // 从event对象中获取鼠标的Y坐标（垂直位置）
+            const mouseY = event.clientY;
+            /*
+            解释这行代码：
+            - mouseY 是鼠标的垂直位置
+            - event.clientY 是浏览器告诉我们的鼠标垂直位置
+            - clientY 的值从0开始，0表示屏幕最顶部
+            */
+            
+            // 把鼠标坐标打印到开发者控制台
+            console.log('鼠标位置 - X:', mouseX, 'Y:', mouseY);
+            /*
+            解释console.log：
+            - console.log() 是程序员最重要的调试工具
+            - 它会把信息显示在浏览器的开发者控制台中
+            - 我们可以在里面放任何想查看的信息
+            - 这行代码会显示类似："鼠标位置 - X: 150 Y: 200"
+            */
+        }
+        
+        // 第二步：告诉浏览器"当鼠标移动时，请调用我们的函数"
+        window.addEventListener('mousemove', handleMouseMove);
+        /*
+        这是最关键的一行代码！让我详细解释：
+        
+        - window 代表整个浏览器窗口
+        - addEventListener 是一个方法，意思是"添加事件监听器"
+        - 'mousemove' 是事件类型，告诉浏览器我们想监听"鼠标移动"事件
+        - handleMouseMove 是我们上面定义的函数名
+        
+        整句话的意思是：
+        "嘿，浏览器！当用户在窗口中移动鼠标时，请调用我的handleMouseMove函数！"
+        
+        这就像给浏览器安装了一个"鼠标移动探测器"
+        */
+        
+        // 可选：在页面加载完成时显示一条欢迎信息
+        console.log('🎉 里程碑3启动！请移动鼠标，在控制台查看坐标！');
+        /*
+        这行代码会在页面加载时立即执行，在控制台显示欢迎信息
+        这样我们就知道JavaScript代码已经成功运行了
+        */
+        
+    </script>
+    <!-- JavaScript代码结束 -->
+
+</body>
+
+</html>
