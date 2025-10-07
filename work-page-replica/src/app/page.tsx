@@ -6,13 +6,15 @@ import { CardList } from '@/components/ui/CardList';
 import ScrollTestContent from '@/components/test/ScrollTestContent';
 import PerformanceMonitor from '@/components/test/PerformanceMonitor';
 import { DebugManager } from '@/components/debug/DebugManager';
-import ShaderBackground from '@/components/ui/ShaderBackground';
+import { ShaderAnimation } from '@/components/ui/shader-animation';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* Shader背景 - GPU驱动的3D画布 */}
-      <ShaderBackground />
+      {/* 新的着色器动画背景 - GPU驱动的3D画布 */}
+      <div className="fixed inset-0 -z-10">
+        <ShaderAnimation />
+      </div>
       
       {/* 隐形调试管理器 - 只在开发环境启用 */}
       {process.env.NODE_ENV === 'development' && (

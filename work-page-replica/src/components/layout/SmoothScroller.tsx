@@ -32,7 +32,7 @@ export default function SmoothScroller({ children }: SmoothScrollerProps) {
         lenisRef.current = new Lenis(lenisConfig);
         
         // 监听滚动事件并同步到 Zustand
-        lenisRef.current.on('scroll', (e: any) => {
+        lenisRef.current.on('scroll', (e: { progress?: number; velocity?: number }) => {
           updateScroll({
             progress: e.progress || 0,
             velocity: e.velocity || 0,
@@ -98,7 +98,7 @@ export default function SmoothScroller({ children }: SmoothScrollerProps) {
 
       console.log('🧹 SmoothScroller 清理完成');
     };
-  }, []); // 空依赖数组确保只初始化一次
+  }, [reset, updateScroll]); // 添加依赖项
 
   // 如果没有children，返回null（作为纯管理器使用）
   return children ? <>{children}</> : null;

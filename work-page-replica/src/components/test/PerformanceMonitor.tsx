@@ -59,7 +59,7 @@ export default function PerformanceMonitor() {
         // 获取内存使用情况（仅在支持的浏览器中）
         let memoryUsage = null;
         if ('memory' in performance) {
-          const memory = (performance as any).memory;
+          const memory = (performance as { memory: { usedJSHeapSize: number; totalJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
           memoryUsage = {
             used: Math.round(memory.usedJSHeapSize / 1024 / 1024), // MB
             total: Math.round(memory.totalJSHeapSize / 1024 / 1024), // MB

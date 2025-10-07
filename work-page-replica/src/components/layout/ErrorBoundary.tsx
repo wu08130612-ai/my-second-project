@@ -81,7 +81,7 @@ export default ErrorBoundary;
 export function SmoothScrollerErrorBoundary({ children }: { children: React.ReactNode }) {
   return (
     <ErrorBoundary
-      fallback={({ error, resetError }) => (
+      fallback={({ resetError }) => (
         <div className="fixed top-4 right-4 bg-red-50 border border-red-200 rounded-lg p-4 max-w-md z-50">
           <h3 className="text-red-800 font-semibold mb-2">滚动系统错误</h3>
           <p className="text-red-600 text-sm mb-3">

@@ -4,7 +4,6 @@
  */
 
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 export interface ScrollStore {
   // 0-1, 整个页面的顶级进度值 (lenisInstance.progress)
@@ -33,34 +32,22 @@ const initialState = {
   isRunning: false,
 };
 
-export const useScrollStore = create<ScrollStore>()(
-  devtools(
-    (set) => ({
-      ...initialState,
-      
-      updateScroll: (data) =>
-        set(
-          (state) => ({
-            ...state,
-            ...data,
-          }),
-          false,
-          'updateScroll'
-        ),
-      
-      reset: () =>
-        set(
-          initialState,
-          false,
-          'reset'
-        ),
-    }),
-    {
-      name: 'scroll-store', // Redux DevTools 中显示的名称
-      enabled: process.env.NODE_ENV === 'development', // 只在开发环境启用
-    }
-  )
-);
+export const useScrollStore = create<ScrollStore>()((set) => ({
+  ...initialState,
+  
+  updateScroll: (data: {
+    progress: number;
+    velocity: number;
+    isRunning: boolean;
+  }) =>
+    set((state) => ({
+      ...state,
+      ...data,
+    })),
+  
+  reset: () =>
+    set(initialState),
+}));
 
 // 选择器 - 用于性能优化的细粒度订阅
 export const useScrollProgress = () => useScrollStore((state) => state.progress);

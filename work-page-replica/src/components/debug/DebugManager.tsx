@@ -14,8 +14,18 @@ import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
 import { DebugDrawer } from './DebugDrawer';
 import { UnifiedDebugPanel } from './UnifiedDebugPanel';
 
+interface LevaDebugConfig {
+  offsetMultiplier: number;
+  scaleMin: number;
+  scaleMax: number;
+  opacityMin: number;
+  opacityMax: number;
+  rotateMin: number;
+  rotateMax: number;
+}
+
 interface DebugManagerProps {
-  onConfigChange?: (config: any) => void;
+  onConfigChange?: (config: LevaDebugConfig) => void;
 }
 
 export const DebugManager: React.FC<DebugManagerProps> = ({

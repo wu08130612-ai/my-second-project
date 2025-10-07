@@ -4,16 +4,15 @@
  */
 
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 export interface DebugStore {
-  // 调试面板是否显示
+  // 状态
   isDebugPanelOpen: boolean;
   
-  // 键盘快捷键是否已注册
+  // 快捷键注册状态
   isShortcutRegistered: boolean;
   
-  // Actions
+  // 动作
   toggleDebugPanel: () => void;
   openDebugPanel: () => void;
   closeDebugPanel: () => void;
@@ -25,57 +24,33 @@ const initialState = {
   isShortcutRegistered: false,
 };
 
-export const useDebugStore = create<DebugStore>()(
-  devtools(
-    (set) => ({
-      ...initialState,
-      
-      toggleDebugPanel: () =>
-        set(
-          (state) => ({
-            ...state,
-            isDebugPanelOpen: !state.isDebugPanelOpen,
-          }),
-          false,
-          'toggleDebugPanel'
-        ),
-      
-      openDebugPanel: () =>
-        set(
-          (state) => ({
-            ...state,
-            isDebugPanelOpen: true,
-          }),
-          false,
-          'openDebugPanel'
-        ),
-      
-      closeDebugPanel: () =>
-        set(
-          (state) => ({
-            ...state,
-            isDebugPanelOpen: false,
-          }),
-          false,
-          'closeDebugPanel'
-        ),
-      
-      setShortcutRegistered: (registered) =>
-        set(
-          (state) => ({
-            ...state,
-            isShortcutRegistered: registered,
-          }),
-          false,
-          'setShortcutRegistered'
-        ),
-    }),
-    {
-      name: 'debug-store',
-      enabled: process.env.NODE_ENV === 'development',
-    }
-  )
-);
+export const useDebugStore = create<DebugStore>((set) => ({
+  ...initialState,
+  
+  toggleDebugPanel: () =>
+    set((state) => ({
+      ...state,
+      isDebugPanelOpen: !state.isDebugPanelOpen,
+    })),
+  
+  openDebugPanel: () =>
+    set((state) => ({
+      ...state,
+      isDebugPanelOpen: true,
+    })),
+  
+  closeDebugPanel: () =>
+    set((state) => ({
+      ...state,
+      isDebugPanelOpen: false,
+    })),
+  
+  setShortcutRegistered: (registered: boolean) =>
+    set((state) => ({
+      ...state,
+      isShortcutRegistered: registered,
+    })),
+}));
 
 // 选择器 - 用于性能优化的细粒度订阅
 export const useDebugPanelOpen = () => useDebugStore((state) => state.isDebugPanelOpen);
