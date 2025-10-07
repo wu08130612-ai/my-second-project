@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>里程碑5 - 3D交互式卡片网格</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #111;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 3D透视容器 - 关键的perspective设置 */
+        .grid-container {
+            perspective: 1000px;
+            perspective-origin: center center;
+            padding: 50px;
+        }
+
+        /* CSS Grid 3x3布局 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 300px);
+            grid-template-rows: repeat(3, 200px);
+            gap: 30px;
+            transform-style: preserve-3d;
+        }
+
+        /* 卡片样式 - 严格按照需求 */
+        .card {
+            width: 300px;
+            height: 200px;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 10px;
+            
+            /* 关键的transition - 让倾斜动画平滑 */
+            transition: transform 0.1s ease-out;
+            
+            /* 微妙的阴影 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            
+            /* 3D变换准备 */
+            transform-style: preserve-3d;
+            
+            /* 卡片内容居中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #888;
+        }
+
+        /* 调试信息样式 */
+        .debug-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- 调试信息面板 -->
+    <div class="debug-info" id="debugInfo">
+        <div>鼠标位置: <span id="mousePos">0, 0</span></div>
+        <div>活跃卡片: <span id="activeCard">无</span></div>
+        <div>最大倾斜: <span id="maxTilt">0°</span></div>
+    </div>
+
+    <!-- 3D透视容器 -->
+    <div class="grid-container">
+        <!-- 3x3卡片网格 -->
+        <div class="cards-grid" id="cardsGrid">
+            <div class="card" data-index="0">卡片 1</div>
+            <div class="card" data-index="1">卡片 2</div>
+            <div class="card" data-index="2">卡片 3</div>
+            <div class="card" data-index="3">卡片 4</div>
+            <div class="card" data-index="4">卡片 5</div>
+            <div class="card" data-index="5">卡片 6</div>
+            <div class="card" data-index="6">卡片 7</div>
+            <div class="card" data-index="7">卡片 8</div>
+            <div class="card" data-index="8">卡片 9</div>
+        </div>
+    </div>
+
+    <script>
+        // 3D交互式卡片网格系统
+        // 高性能方案：全程使用transform，GPU加速
+        
+        // 配置参数
+        const CONFIG = {
+            maxTiltAngle: 15,        // 最大倾斜角度
+            effectRadius: 300,       // 影响半径
+            transitionDuration: 0.1  // 过渡时间
+        };
+
+        // 全局状态
+        let cards = [];
+        let cardCenters = [];
+        let isInitialized = false;
+
+        // 调试元素
+        const debugInfo = {
+            mousePos: document.getElementById('mousePos'),
+            activeCard: document.getElementById('activeCard'),
+            maxTilt: document.getElementById('maxTilt')
+        };
+
+        // 初始化系统
+        function initializeCardSystem() {
+            console.log('🚀 初始化3D卡片系统...');
+            
+            // 获取所有卡片
+            cards = document.querySelectorAll('.card');
+            console.log(`📦 找到 ${cards.length} 个卡片`);
+            
+            // 计算每个卡片的中心位置
+            calculateCardCenters();
+            
+            // 绑定全局鼠标事件
+            bindGlobalMouseEvents();
+            
+            isInitialized = true;
+            console.log('✅ 3D卡片系统初始化完成');
+        }
+
+        // 计算卡片中心位置
+        function calculateCardCenters() {
+            cardCenters = [];
+            
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                cardCenters.push({ x: centerX, y: centerY });
+                
+                console.log(`📍 卡片${index + 1}中心: (${centerX.toFixed(1)}, ${centerY.toFixed(1)})`);
+            });
+        }
+
+        // 距离衰减算法 - 使用现代Math.hypot
+        function calculateTiltIntensity(mouseX, mouseY, cardCenterX, cardCenterY) {
+            // 使用Math.hypot计算直线距离
+            const distance = Math.hypot(mouseX - cardCenterX, mouseY - cardCenterY);
+            
+            // 距离衰减公式：强度 = max(0, 1 - 距离/半径)
+            const intensity = Math.max(0, 1 - distance / CONFIG.effectRadius);
+            
+            return { distance, intensity };
+        }
+
+        // 计算3D倾斜角度
+        function calculate3DTilt(mouseX, mouseY, cardCenterX, cardCenterY, intensity) {
+            // 计算相对位置
+            const deltaX = mouseX - cardCenterX;
+            const deltaY = mouseY - cardCenterY;
+            
+            // 计算倾斜角度（反向，让卡片"看向"鼠标）
+            const tiltX = -(deltaY / CONFIG.effectRadius) * CONFIG.maxTiltAngle * intensity;
+            const tiltY = (deltaX / CONFIG.effectRadius) * CONFIG.maxTiltAngle * intensity;
+            
+            return { tiltX, tiltY };
+        }
+
+        // 应用3D变换 - 高性能transform方案
+        function applyCardTransform(card, tiltX, tiltY) {
+            // 纯transform方案，GPU加速，零reflow
+            card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        }
+
+        // 全局鼠标移动处理
+        function handleGlobalMouseMove(event) {
+            if (!isInitialized) return;
+            
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            
+            // 更新调试信息
+            debugInfo.mousePos.textContent = `${mouseX}, ${mouseY}`;
+            
+            let maxTiltValue = 0;
+            let activeCardIndex = -1;
+            
+            // 遍历所有卡片，应用3D效果
+            cards.forEach((card, index) => {
+                const cardCenter = cardCenters[index];
+                
+                // 计算距离和强度
+                const { distance, intensity } = calculateTiltIntensity(
+                    mouseX, mouseY, cardCenter.x, cardCenter.y
+                );
+                
+                if (intensity > 0) {
+                    // 计算3D倾斜
+                    const { tiltX, tiltY } = calculate3DTilt(
+                        mouseX, mouseY, cardCenter.x, cardCenter.y, intensity
+                    );
+                    
+                    // 应用变换
+                    applyCardTransform(card, tiltX, tiltY);
+                    
+                    // 记录最大倾斜值
+                    const totalTilt = Math.hypot(tiltX, tiltY);
+                    if (totalTilt > maxTiltValue) {
+                        maxTiltValue = totalTilt;
+                        activeCardIndex = index;
+                    }
+                } else {
+                    // 超出影响范围，重置为静止状态
+                    applyCardTransform(card, 0, 0);
+                }
+            });
+            
+            // 更新调试信息
+            debugInfo.maxTilt.textContent = `${maxTiltValue.toFixed(1)}°`;
+            debugInfo.activeCard.textContent = activeCardIndex >= 0 ? `卡片 ${activeCardIndex + 1}` : '无';
+        }
+
+        // 绑定全局事件
+        function bindGlobalMouseEvents() {
+            // 全局鼠标移动监听
+            window.addEventListener('mousemove', handleGlobalMouseMove);
+            
+            // 窗口大小改变时重新计算卡片位置
+            window.addEventListener('resize', () => {
+                setTimeout(calculateCardCenters, 100);
+            });
+            
+            console.log('🎯 全局鼠标事件绑定完成');
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initializeCardSystem);
+        
+        // 防止页面刷新时的闪烁
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
