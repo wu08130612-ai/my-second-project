@@ -15,13 +15,13 @@ export const PHYSICS: Record<'gentle' | 'fast', PhysicsConfig> = {
     damping: 20,
     mass: 1,
   },
-  
+
   /**
    * 快速配置 - 特殊场景
    * 适用于需要快速响应的交互，如按钮点击等
    */
   fast: {
-    name: 'fast', 
+    name: 'fast',
     stiffness: 300,
     damping: 30,
     mass: 0.8,

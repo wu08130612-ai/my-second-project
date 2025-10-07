@@ -1,0 +1,248 @@
+import type { CardData } from '@/types';
+
+/**
+ * 静态卡片数据
+ * 20条高保真的项目数据，模拟Active Theory风格的作品集
+ */
+export const CARD_DATA: CardData[] = [
+  {
+    id: 'project-001',
+    title: 'Immersive Brand Experience',
+    description:
+      'A cutting-edge digital installation that transforms brand storytelling through interactive 3D environments and real-time data visualization.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Digital Installation',
+    tags: ['WebGL', '3D', 'Interactive', 'Brand'],
+    client: 'Nike',
+    year: 2024,
+    projectUrl: 'https://example.com/nike-experience',
+  },
+  {
+    id: 'project-002',
+    title: 'Neural Network Visualization',
+    description:
+      'An educational platform that makes machine learning concepts accessible through beautiful, interactive neural network visualizations.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Data Visualization',
+    tags: ['AI', 'Education', 'WebGL', 'Animation'],
+    client: 'Google AI',
+    year: 2024,
+    projectUrl: 'https://example.com/neural-viz',
+  },
+  {
+    id: 'project-003',
+    title: 'Sustainable Future Dashboard',
+    description:
+      'A comprehensive environmental impact dashboard featuring real-time climate data and interactive carbon footprint calculators.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Environmental Tech',
+    tags: ['Sustainability', 'Data', 'Dashboard', 'Climate'],
+    client: 'Tesla',
+    year: 2023,
+    projectUrl: 'https://example.com/sustainability-dashboard',
+  },
+  {
+    id: 'project-004',
+    title: 'Quantum Computing Interface',
+    description:
+      'A revolutionary user interface for quantum computing systems, making complex quantum algorithms visually comprehensible.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Quantum UI',
+    tags: ['Quantum', 'Interface', 'Complex Systems', 'Visualization'],
+    client: 'IBM Quantum',
+    year: 2024,
+    projectUrl: 'https://example.com/quantum-interface',
+  },
+  {
+    id: 'project-005',
+    title: 'Metaverse Architecture Studio',
+    description:
+      'A virtual reality platform for architects to design and collaborate on buildings in immersive 3D environments.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'VR/AR',
+    tags: ['VR', 'Architecture', 'Collaboration', '3D Design'],
+    client: 'Autodesk',
+    year: 2023,
+    projectUrl: 'https://example.com/metaverse-studio',
+  },
+  {
+    id: 'project-006',
+    title: 'Biometric Health Tracker',
+    description:
+      'An advanced health monitoring system that visualizes biometric data through elegant, real-time interactive charts.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Health Tech',
+    tags: ['Health', 'Biometrics', 'Real-time', 'Visualization'],
+    client: 'Apple Health',
+    year: 2024,
+    projectUrl: 'https://example.com/health-tracker',
+  },
+  {
+    id: 'project-007',
+    title: 'Space Exploration Timeline',
+    description:
+      "An interactive timeline showcasing humanity's journey to space with immersive 3D spacecraft models and mission data.",
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Educational',
+    tags: ['Space', 'Timeline', '3D Models', 'History'],
+    client: 'NASA',
+    year: 2023,
+    projectUrl: 'https://example.com/space-timeline',
+  },
+  {
+    id: 'project-008',
+    title: 'Cryptocurrency Trading Platform',
+    description:
+      'A sophisticated trading interface with real-time market data, advanced charting tools, and AI-powered trading insights.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'FinTech',
+    tags: ['Crypto', 'Trading', 'Real-time', 'AI'],
+    client: 'Coinbase',
+    year: 2024,
+    projectUrl: 'https://example.com/crypto-platform',
+  },
+  {
+    id: 'project-009',
+    title: 'Smart City Management',
+    description:
+      'A comprehensive urban planning tool that integrates IoT data, traffic patterns, and citizen feedback for smarter cities.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Smart City',
+    tags: ['IoT', 'Urban Planning', 'Data Integration', 'Smart Systems'],
+    client: 'Singapore Government',
+    year: 2023,
+    projectUrl: 'https://example.com/smart-city',
+  },
+  {
+    id: 'project-010',
+    title: 'Genomic Data Explorer',
+    description:
+      'A powerful bioinformatics platform for visualizing and analyzing complex genomic datasets with interactive 3D protein structures.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Bioinformatics',
+    tags: ['Genomics', 'Bioinformatics', '3D Visualization', 'Research'],
+    client: '23andMe',
+    year: 2024,
+    projectUrl: 'https://example.com/genomic-explorer',
+  },
+  {
+    id: 'project-011',
+    title: 'Autonomous Vehicle Interface',
+    description:
+      'An intuitive dashboard for autonomous vehicles featuring real-time sensor data, route optimization, and safety monitoring.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Automotive',
+    tags: ['Autonomous', 'Vehicle', 'Dashboard', 'Safety'],
+    client: 'Waymo',
+    year: 2024,
+    projectUrl: 'https://example.com/autonomous-interface',
+  },
+  {
+    id: 'project-012',
+    title: 'Ocean Conservation Tracker',
+    description:
+      'A marine biology platform tracking ocean health through satellite data, underwater sensors, and marine life monitoring.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Environmental',
+    tags: ['Ocean', 'Conservation', 'Satellite Data', 'Marine Biology'],
+    client: 'Ocean Conservancy',
+    year: 2023,
+    projectUrl: 'https://example.com/ocean-tracker',
+  },
+  {
+    id: 'project-013',
+    title: 'Augmented Reality Shopping',
+    description:
+      'A revolutionary retail experience allowing customers to visualize products in their space using advanced AR technology.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Retail Tech',
+    tags: ['AR', 'Retail', 'E-commerce', 'Visualization'],
+    client: 'Amazon',
+    year: 2024,
+    projectUrl: 'https://example.com/ar-shopping',
+  },
+  {
+    id: 'project-014',
+    title: 'Music Visualization Engine',
+    description:
+      'An advanced audio-reactive visualization system that transforms music into stunning real-time 3D visual experiences.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Audio Visual',
+    tags: ['Music', 'Visualization', 'Audio Reactive', '3D'],
+    client: 'Spotify',
+    year: 2023,
+    projectUrl: 'https://example.com/music-viz',
+  },
+  {
+    id: 'project-015',
+    title: 'Renewable Energy Grid',
+    description:
+      'A smart grid management system optimizing renewable energy distribution with predictive analytics and real-time monitoring.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Energy Tech',
+    tags: ['Renewable Energy', 'Smart Grid', 'Analytics', 'Monitoring'],
+    client: 'General Electric',
+    year: 2024,
+    projectUrl: 'https://example.com/energy-grid',
+  },
+  {
+    id: 'project-016',
+    title: 'Digital Twin Factory',
+    description:
+      'An industrial IoT platform creating digital twins of manufacturing processes for optimization and predictive maintenance.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Industrial IoT',
+    tags: ['Digital Twin', 'Manufacturing', 'IoT', 'Predictive'],
+    client: 'Siemens',
+    year: 2023,
+    projectUrl: 'https://example.com/digital-twin',
+  },
+  {
+    id: 'project-017',
+    title: 'Climate Change Simulator',
+    description:
+      'An educational tool simulating climate change scenarios with interactive models and data-driven predictions.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Climate Science',
+    tags: ['Climate', 'Simulation', 'Education', 'Data Science'],
+    client: 'NOAA',
+    year: 2024,
+    projectUrl: 'https://example.com/climate-simulator',
+  },
+  {
+    id: 'project-018',
+    title: 'Blockchain Transparency Tool',
+    description:
+      'A comprehensive blockchain explorer with advanced analytics, transaction visualization, and smart contract auditing.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Blockchain',
+    tags: ['Blockchain', 'Analytics', 'Transparency', 'Smart Contracts'],
+    client: 'Ethereum Foundation',
+    year: 2023,
+    projectUrl: 'https://example.com/blockchain-explorer',
+  },
+  {
+    id: 'project-019',
+    title: 'Personalized Learning AI',
+    description:
+      'An adaptive learning platform using AI to create personalized educational experiences with interactive content delivery.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'EdTech',
+    tags: ['AI', 'Education', 'Personalization', 'Adaptive Learning'],
+    client: 'Khan Academy',
+    year: 2024,
+    projectUrl: 'https://example.com/learning-ai',
+  },
+  {
+    id: 'project-020',
+    title: 'Quantum Cryptography Network',
+    description:
+      'A next-generation security platform leveraging quantum cryptography for ultra-secure communications and data protection.',
+    imageUrl: 'https://placehold.co/800x600',
+    category: 'Cybersecurity',
+    tags: ['Quantum', 'Cryptography', 'Security', 'Network'],
+    client: 'Microsoft Security',
+    year: 2024,
+    projectUrl: 'https://example.com/quantum-crypto',
+  },
+];
