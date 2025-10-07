@@ -33,16 +33,32 @@ export interface CardData {
 
 /**
  * 卡片组件Props接口
+ * 里程碑9升级：支持全局滚动视差编排
  */
 export interface InteractiveCardProps {
   /** 卡片数据 */
   data: CardData;
 
-  /** 卡片索引 (用于动画时间偏移) */
+  /** 卡片索引 (用于动画时间偏移和层次感) */
   index: number;
+
+  /** 卡片总数 (用于动态offset计算) */
+  total: number;
 
   /** 自定义类名 (可选) */
   className?: string;
+
+  /** 动画配置 (可选) - 里程碑9新增 */
+  animationConfig?: {
+    /** offset乘数，控制层次感强度 */
+    offsetMultiplier?: number;
+    /** scale变化范围 */
+    scaleRange?: [number, number];
+    /** opacity变化范围 */
+    opacityRange?: [number, number];
+    /** rotateX变化范围 */
+    rotateRange?: [string, string];
+  };
 }
 
 /**

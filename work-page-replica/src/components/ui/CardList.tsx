@@ -38,6 +38,7 @@ export const CardList = ({ cards, className = '' }: CardListProps) => {
             key={card.id}
             data={card}
             index={index}
+            total={cards.length}
             className="h-full"
           />
         ))}
