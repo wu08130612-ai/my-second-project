@@ -6,10 +6,14 @@ import { CardList } from '@/components/ui/CardList';
 import ScrollTestContent from '@/components/test/ScrollTestContent';
 import PerformanceMonitor from '@/components/test/PerformanceMonitor';
 import { DebugManager } from '@/components/debug/DebugManager';
+import ShaderBackground from '@/components/ui/ShaderBackground';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
+      {/* Shader背景 - GPU驱动的3D画布 */}
+      <ShaderBackground />
+      
       {/* 隐形调试管理器 - 只在开发环境启用 */}
       {process.env.NODE_ENV === 'development' && (
         <>
@@ -18,8 +22,8 @@ export default function Home() {
         </>
       )}
       
-      {/* 原有的首页内容 */}
-      <section className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
+      {/* 原有的首页内容 - 移除CSS背景，让Shader背景透过 */}
+      <section className="min-h-screen relative">
         <div className="container mx-auto px-4 py-16">
           <div className="text-center mb-16">
             <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
